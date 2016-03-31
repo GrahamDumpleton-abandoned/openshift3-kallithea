@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -x
+
+set -eo pipefail
+
+APP_CONFIG=$WARPDRIVE_APP_ROOT/tmp/production.ini
+
+paster make-config Kallithea $APP_CONFIG
+
+sed -i.bak "s/^debug = true/debug = false/" $APP_CONFIG
+sed -i.bak "s/^use_celery = .*$/use_celery = false/" $APP_CONFIG
+sed -i.bak "s%^git_path = .*$%git_path = `which git`%" $APP_CONFIG

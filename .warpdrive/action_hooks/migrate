@@ -1,0 +1,5 @@
+#!/bin/bash
+
+set -x
+
+paster upgrade-db production.ini --force-yes
