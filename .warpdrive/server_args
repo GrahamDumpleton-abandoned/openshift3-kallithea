@@ -1,1 +1,1 @@
---application-type paste $WARPDRIVE_APP_ROOT/tmp/production.ini
+--application-type paste $WARPDRIVE_APP_ROOT/tmp/production.ini --trust-proxy-header X-Forwarded-For --trust-proxy-header X-Forwarded-Port --trust-proxy-header X-Forwarded-Scheme
