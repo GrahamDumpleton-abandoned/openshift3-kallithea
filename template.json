@@ -16,7 +16,7 @@
       "metadata": {
         "name": "${APPLICATION_NAME}",
         "labels": {
-          "app": "${APPLICATION_NAME}"
+          "web": "${APPLICATION_NAME}"
         }
       }
     },
@@ -26,7 +26,7 @@
       "metadata": {
         "name": "${APPLICATION_NAME}-s2i",
         "labels": {
-          "app": "${APPLICATION_NAME}"
+          "web": "${APPLICATION_NAME}"
         }
       },
       "spec": {
@@ -47,7 +47,7 @@
       "metadata": {
         "name": "${APPLICATION_NAME}",
         "labels": {
-          "app": "${APPLICATION_NAME}"
+          "web": "${APPLICATION_NAME}"
         }
       },
       "spec": {
@@ -92,7 +92,7 @@
       "metadata": {
         "name": "${APPLICATION_NAME}",
         "labels": {
-          "app": "${APPLICATION_NAME}"
+          "web": "${APPLICATION_NAME}"
         }
       },
       "spec": {
@@ -116,12 +116,12 @@
         ],
         "replicas": 1,
         "selector": {
-          "app": "${APPLICATION_NAME}"
+          "web": "${APPLICATION_NAME}"
         },
         "template": {
           "metadata": {
             "labels": {
-              "app": "${APPLICATION_NAME}"
+              "web": "${APPLICATION_NAME}"
             }
           },
           "spec": {
@@ -229,7 +229,7 @@
       "metadata": {
         "name": "${APPLICATION_NAME}",
         "labels": {
-          "app": "${APPLICATION_NAME}"
+          "web": "${APPLICATION_NAME}"
         }
       },
       "spec": {
@@ -242,7 +242,7 @@
           }
         ],
         "selector": {
-          "app": "${APPLICATION_NAME}"
+          "web": "${APPLICATION_NAME}"
         }
       }
     },
@@ -252,7 +252,7 @@
       "metadata": {
         "name": "${APPLICATION_NAME}",
         "labels": {
-          "app": "${APPLICATION_NAME}"
+          "web": "${APPLICATION_NAME}"
         }
       },
       "spec": {
@@ -288,7 +288,7 @@
       "metadata": {
         "name": "${APPLICATION_NAME}-db",
         "labels": {
-          "app": "${APPLICATION_NAME}-db"
+          "db": "${APPLICATION_NAME}-db"
         }
       },
       "spec": {
@@ -316,13 +316,13 @@
         ],
         "replicas": 1,
         "selector": {
-          "app": "${APPLICATION_NAME}-db"
+          "db": "${APPLICATION_NAME}-db"
         },
         "template": {
           "metadata": {
             "name": "${APPLICATION_NAME}-db",
             "labels": {
-              "app": "${APPLICATION_NAME}-db"
+              "db": "${APPLICATION_NAME}-db"
             }
           },
           "spec": {
@@ -381,7 +381,7 @@
       "metadata": {
         "name": "${APPLICATION_NAME}-db",
         "labels": {
-          "app": "${APPLICATION_NAME}-db"
+          "db": "${APPLICATION_NAME}-db"
         }
       },
       "spec": {
@@ -394,7 +394,7 @@
           }
         ],
         "selector": {
-          "app": "${APPLICATION_NAME}-db"
+          "db": "${APPLICATION_NAME}-db"
         }
       }
     }
