@@ -2,8 +2,8 @@
 
 set -x
 
-mkdir -p $WARPDRIVE_APP_ROOT/repos
+mkdir -p $WARPDRIVE_APP_ROOT/data
 
 paster setup-db $WARPDRIVE_APP_ROOT/tmp/production.ini --user="admin" \
     --password="changethis" --email="admin@test.com" \
-    --repos="$WARPDRIVE_APP_ROOT/repos" --force-yes
+    --repos="$WARPDRIVE_APP_ROOT/data" --force-yes
