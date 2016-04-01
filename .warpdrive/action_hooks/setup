@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -x
+
+mkdir -p $WARPDRIVE_APP_ROOT/repos
+
+paster setup-db $WARPDRIVE_APP_ROOT/tmp/production.ini --user="admin" \
+    --password="changethis" --email="admin@test.com" \
+    --repos="$WARPDRIVE_APP_ROOT/repos" --force-yes

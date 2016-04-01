@@ -1,9 +1,0 @@
-#!/bin/bash
-
-set -x
-
-mkdir -p $WARPDRIVE_APP_ROOT
-
-paster setup-db production.ini --user="admin" --password="changethis" \
-    --email="admin@test.com" --repos="$WARPDRIVE_APP_ROOT/repos" \
-    --force-yes

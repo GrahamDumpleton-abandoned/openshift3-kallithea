@@ -2,4 +2,4 @@
 
 set -x
 
-paster upgrade-db production.ini --force-yes
+paster upgrade-db $WARPDRIVE_APP_ROOT/tmp/production.ini --force-yes
