@@ -4,6 +4,10 @@ set -x
 
 mkdir -p $WARPDRIVE_APP_ROOT/data
 
-paster setup-db $WARPDRIVE_APP_ROOT/tmp/production.ini --user="admin" \
-    --password="changethis" --email="admin@test.com" \
-    --repos="$WARPDRIVE_APP_ROOT/data" --force-yes
+paster setup-db \
+    $WARPDRIVE_APP_ROOT/tmp/production.ini \
+    --user="$KALLITHEA_ADMIN_USERNAME" \
+    --password="$KALLITHEA_ADMIN_PASSWORD" \
+    --email="$KALLITHEA_ADMIN_EMAIL" \
+    --repos="$WARPDRIVE_APP_ROOT/data" \
+    --force-yes
