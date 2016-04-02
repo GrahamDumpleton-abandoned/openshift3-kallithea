@@ -461,7 +461,7 @@
         },
         {
           "name": "APPLICATION_MEMORY_LIMIT",
-          "displayName": "Kallithea memory limit",
+          "displayName": "Application memory limit",
           "description": "Maximum amount of memory Kallithea can use",
           "value": "256Mi"
         },
@@ -884,7 +884,7 @@
         },
         {
           "name": "APPLICATION_MEMORY_LIMIT",
-          "displayName": "Kallithea memory limit",
+          "displayName": "Application memory limit",
           "description": "Maximum amount of memory Kallithea can use",
           "value": "256Mi"
         },
