@@ -45,5 +45,5 @@ if [ ! -f $WARPDRIVE_APP_ROOT/data/markers/setup ]; then
     # Create the marker file to indicate database has been initialised. 
 
     mkdir -p $WARPDRIVE_APP_ROOT/data/markers
-    touch $WARPDRIVE_APP_ROOT/data/markers/setup
+    date > $WARPDRIVE_APP_ROOT/data/markers/setup
 fi
