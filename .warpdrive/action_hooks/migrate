@@ -10,4 +10,12 @@ set -x
 # migrations are done when no processes are trying to access the
 # database.
 
+# When run from a 'pre' hook we need to do this explicitly as is
+# normally only done during deploy action hook when running the
+# actual application.
+
+sed -i "s%^sqlalchemy\.db1\.url = .*$%sqlalchemy.db1.url = $OPENSHIFT_POSTGRESQL_DB_URL%" $WARPDRIVE_APP_ROOT/tmp/production.ini
+
+# Run the actual database migration.
+
 paster upgrade-db $WARPDRIVE_APP_ROOT/tmp/production.ini --force-yes
