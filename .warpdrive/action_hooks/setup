@@ -2,6 +2,8 @@
 
 set -x
 
+set -eo pipefail
+
 # This script creates the directory for the repositories and runs
 # database inialisation.
 #
@@ -25,6 +27,10 @@ if [ ! -f $WARPDRIVE_APP_ROOT/data/markers/setup ]; then
     # actual application.
 
     sed -i "s%^sqlalchemy\.db1\.url = .*$%sqlalchemy.db1.url = $OPENSHIFT_POSTGRESQL_DB_URL%" $WARPDRIVE_APP_ROOT/tmp/production.ini
+
+    # Check whether the database is actually ready.
+
+    python $WARPDRIVE_SRC_ROOT/.warpdrive/scripts/check-database.py
 
     # Run the database initialisation.
 

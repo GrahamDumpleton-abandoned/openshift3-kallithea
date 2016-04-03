@@ -2,6 +2,8 @@
 
 set -x
 
+set -eo pipefail
+
 # Runs the database migration.
 #
 # This script can be executed using the 'warpdrive migrate' command from
