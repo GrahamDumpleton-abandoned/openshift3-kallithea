@@ -2,12 +2,36 @@
 
 set -x
 
-mkdir -p $WARPDRIVE_APP_ROOT/data/repos
+# This script creates the directory for the repositories and runs
+# database inialisation.
+#
+# If the directory for the repositories and the database initialisation
+# has already been run, as determined by the presence of a marker file
+# in the persistent storage volume, we skip trying to perform database
+# initialisation.
+#
+# This script can be executed using the 'warpdrive setup' command from a
+# 'pre' hook. The deployment should only ever use a 'Recreate' strategy
+# and not a 'Rolling' strategy because of possible later database
+# migrations.
 
-paster setup-db \
-    $WARPDRIVE_APP_ROOT/tmp/production.ini \
-    --user="$KALLITHEA_ADMIN_USERNAME" \
-    --password="$KALLITHEA_ADMIN_PASSWORD" \
-    --email="$KALLITHEA_ADMIN_EMAIL" \
-    --repos="$WARPDRIVE_APP_ROOT/data/repos" \
-    --force-yes
+if [ ! -f $WARPDRIVE_APP_ROOT/data/markers/setup ]; then
+    # Create the directory where repositories will be stored.
+
+    mkdir -p $WARPDRIVE_APP_ROOT/data/repos
+
+    # Run the database initialisation.
+
+    paster setup-db \
+        $WARPDRIVE_APP_ROOT/tmp/production.ini \
+        --user="$KALLITHEA_ADMIN_USERNAME" \
+        --password="$KALLITHEA_ADMIN_PASSWORD" \
+        --email="$KALLITHEA_ADMIN_EMAIL" \
+        --repos="$WARPDRIVE_APP_ROOT/data/repos" \
+        --force-yes
+
+    # Create the marker file to indicate database has been initialised. 
+
+    mkdir -p $WARPDRIVE_APP_ROOT/data/markers
+    touch $WARPDRIVE_APP_ROOT/data/markers/setup
+fi

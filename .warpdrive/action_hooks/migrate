@@ -2,4 +2,12 @@
 
 set -x
 
+# Runs the database migration.
+#
+# This script can be executed using the 'warpdrive migrate' command from
+# a 'mid' hook. The deployment should only ever use a 'Recreate'
+# strategy and not a 'Rolling' strategy to ensure that database
+# migrations are done when no processes are trying to access the
+# database.
+
 paster upgrade-db $WARPDRIVE_APP_ROOT/tmp/production.ini --force-yes
