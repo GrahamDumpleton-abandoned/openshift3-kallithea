@@ -100,6 +100,123 @@
             }
           },
           "spec": {
+            "strategy": {
+              "type": "Recreate",
+              "recreateParams": {
+                "pre": {
+                  "failurePolicy": "Abort",
+                  "execNewPod": {
+                    "containerName": "${APPLICATION_NAME}", 
+                    "command": [ 
+                      "warpdrive",
+                      "setup"
+                    ],
+                    "env": [
+                      {
+                        "name": "OPENSHIFT_LANGUAGE_RUNTIME",
+                        "value": "Python"
+                      },
+                      {
+                        "name": "OPENSHIFT_DATABASE_TYPE",
+                        "value": "PostgreSQL"
+                      },
+                      {
+                        "name": "OPENSHIFT_POSTGRESQL_DB_HOST",
+                        "value": "${APPLICATION_NAME}-db"
+                      },
+                      {
+                        "name": "OPENSHIFT_POSTGRESQL_DB_PORT",
+                        "value": "5432"
+                      },
+                      {
+                        "name": "OPENSHIFT_POSTGRESQL_DB_USERNAME",
+                        "value": "${DATABASE_USERNAME}"
+                      },
+                      {
+                        "name": "OPENSHIFT_POSTGRESQL_DB_PASSWORD",
+                        "value": "${DATABASE_PASSWORD}"
+                      },
+                      {
+                        "name": "OPENSHIFT_POSTGRESQL_DB_NAME",
+                        "value": "${APPLICATION_NAME}_db"
+                      },
+                      {
+                        "name": "OPENSHIFT_POSTGRESQL_DB_URL",
+                        "value": "postgresql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${APPLICATION_NAME}-db:5432/${APPLICATION_NAME}_db"
+                      },
+                      {
+                        "name": "KALLITHEA_ADMIN_USERNAME",
+                        "value": "${APPLICATION_ADMIN_USERNAME}"
+                      },
+                      {
+                        "name": "KALLITHEA_ADMIN_PASSWORD",
+                        "value": "${APPLICATION_ADMIN_PASSWORD}"
+                      },
+                      {
+                        "name": "KALLITHEA_ADMIN_EMAIL",
+                        "value": "${APPLICATION_ADMIN_EMAIL}"
+                      }
+                    ]
+                  }
+                },
+                "mid": {
+                  "failurePolicy": "Abort",
+                  "execNewPod": {
+                    "containerName": "${APPLICATION_NAME}", 
+                    "command": [ 
+                      "warpdrive",
+                      "migrate"
+                    ],
+                    "env": [
+                      {
+                        "name": "OPENSHIFT_LANGUAGE_RUNTIME",
+                        "value": "Python"
+                      },
+                      {
+                        "name": "OPENSHIFT_DATABASE_TYPE",
+                        "value": "PostgreSQL"
+                      },
+                      {
+                        "name": "OPENSHIFT_POSTGRESQL_DB_HOST",
+                        "value": "${APPLICATION_NAME}-db"
+                      },
+                      {
+                        "name": "OPENSHIFT_POSTGRESQL_DB_PORT",
+                        "value": "5432"
+                      },
+                      {
+                        "name": "OPENSHIFT_POSTGRESQL_DB_USERNAME",
+                        "value": "${DATABASE_USERNAME}"
+                      },
+                      {
+                        "name": "OPENSHIFT_POSTGRESQL_DB_PASSWORD",
+                        "value": "${DATABASE_PASSWORD}"
+                      },
+                      {
+                        "name": "OPENSHIFT_POSTGRESQL_DB_NAME",
+                        "value": "${APPLICATION_NAME}_db"
+                      },
+                      {
+                        "name": "OPENSHIFT_POSTGRESQL_DB_URL",
+                        "value": "postgresql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${APPLICATION_NAME}-db:5432/${APPLICATION_NAME}_db"
+                      },
+                      {
+                        "name": "KALLITHEA_ADMIN_USERNAME",
+                        "value": "${APPLICATION_ADMIN_USERNAME}"
+                      },
+                      {
+                        "name": "KALLITHEA_ADMIN_PASSWORD",
+                        "value": "${APPLICATION_ADMIN_PASSWORD}"
+                      },
+                      {
+                        "name": "KALLITHEA_ADMIN_EMAIL",
+                        "value": "${APPLICATION_ADMIN_EMAIL}"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
             "triggers": [
               {
                 "type": "ImageChange",
@@ -661,6 +778,10 @@
                       }
                     ],
                     "env": [
+                      {
+                        "name": "KALLITHEA_DEPLOYMENT_TYPE",
+                        "value": "lite"
+                      },
                       {
                         "name": "OPENSHIFT_LANGUAGE_RUNTIME",
                         "value": "Python"
