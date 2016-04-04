@@ -156,6 +156,9 @@
                         "name": "KALLITHEA_ADMIN_EMAIL",
                         "value": "${APPLICATION_ADMIN_EMAIL}"
                       }
+                    ],
+                    "volumes": [
+                      "${APPLICATION_NAME}-pv"
                     ]
                   }
                 },
@@ -212,6 +215,9 @@
                         "name": "KALLITHEA_ADMIN_EMAIL",
                         "value": "${APPLICATION_ADMIN_EMAIL}"
                       }
+                    ],
+                    "volumes": [
+                      "${APPLICATION_NAME}-pv"
                     ]
                   }
                 }
@@ -580,7 +586,7 @@
           "name": "APPLICATION_MEMORY_LIMIT",
           "displayName": "Application memory limit",
           "description": "Maximum amount of memory Kallithea can use",
-          "value": "256Mi"
+          "value": "192Mi"
         },
         {
           "name": "APPLICATION_VOLUME_CAPACITY",
@@ -609,7 +615,7 @@
           "name": "DATABASE_MEMORY_LIMIT",
           "displayName": "PostgreSQL memory limit",
           "description": "Maximum amount of memory PostgreSQL can use",
-          "value": "256Mi"
+          "value": "192Mi"
         },
         {
           "name": "DATABASE_VOLUME_CAPACITY",
@@ -1007,7 +1013,7 @@
           "name": "APPLICATION_MEMORY_LIMIT",
           "displayName": "Application memory limit",
           "description": "Maximum amount of memory Kallithea can use",
-          "value": "256Mi"
+          "value": "192Mi"
         },
         {
           "name": "DATABASE_USERNAME",
@@ -1029,7 +1035,7 @@
           "name": "DATABASE_MEMORY_LIMIT",
           "displayName": "PostgreSQL memory limit",
           "description": "Maximum amount of memory PostgreSQL can use",
-          "value": "256Mi"
+          "value": "192Mi"
         },
         {
           "name": "SHARED_VOLUME_CAPACITY",
