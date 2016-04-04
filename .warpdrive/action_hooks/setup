@@ -46,4 +46,5 @@ if [ ! -f $WARPDRIVE_APP_ROOT/data/markers/setup ]; then
 
     mkdir -p $WARPDRIVE_APP_ROOT/data/markers
     date > $WARPDRIVE_APP_ROOT/data/markers/setup
+    chmod -w $WARPDRIVE_APP_ROOT/data/markers/setup
 fi
