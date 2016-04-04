@@ -18,9 +18,11 @@ set -eo pipefail
 # migrations.
 
 if [ ! -f $WARPDRIVE_APP_ROOT/data/markers/setup ]; then
-    # Create the directory where repositories will be stored.
+    # Create the directory where caches and repositories will be stored.
 
-    mkdir -p $WARPDRIVE_APP_ROOT/data/repos
+    mkdir -p $WARPDRIVE_APP_ROOT/data/kallithea
+    mkdir -p $WARPDRIVE_APP_ROOT/data/kallithea/index
+    mkdir -p $WARPDRIVE_APP_ROOT/data/kallithea/repos
 
     # When run from a 'pre' hook we need to do this explicitly as is
     # normally only done during deploy action hook when running the
@@ -39,7 +41,7 @@ if [ ! -f $WARPDRIVE_APP_ROOT/data/markers/setup ]; then
         --user="$KALLITHEA_ADMIN_USERNAME" \
         --password="$KALLITHEA_ADMIN_PASSWORD" \
         --email="$KALLITHEA_ADMIN_EMAIL" \
-        --repos="$WARPDRIVE_APP_ROOT/data/repos" \
+        --repos="$WARPDRIVE_APP_ROOT/data/kallithea/repos" \
         --force-yes
 
     # Create the marker file to indicate database has been initialised. 
