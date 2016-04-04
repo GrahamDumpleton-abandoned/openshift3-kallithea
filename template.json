@@ -119,7 +119,7 @@
                       },
                       {
                         "name": "OPENSHIFT_POSTGRESQL_DB_NAME",
-                        "value": "${APPLICATION_NAME}_db"
+                        "value": "kallithea"
                       },
                       {
                         "name": "OPENSHIFT_POSTGRESQL_DB_URL",
@@ -178,7 +178,7 @@
                       },
                       {
                         "name": "OPENSHIFT_POSTGRESQL_DB_NAME",
-                        "value": "${APPLICATION_NAME}_db"
+                        "value": "kallithea"
                       },
                       {
                         "name": "OPENSHIFT_POSTGRESQL_DB_URL",
@@ -270,7 +270,7 @@
                       },
                       {
                         "name": "OPENSHIFT_POSTGRESQL_DB_NAME",
-                        "value": "${APPLICATION_NAME}_db"
+                        "value": "kallithea"
                       },
                       {
                         "name": "OPENSHIFT_POSTGRESQL_DB_URL",
@@ -776,7 +776,7 @@
                       },
                       {
                         "name": "OPENSHIFT_POSTGRESQL_DB_NAME",
-                        "value": "${APPLICATION_NAME}_db"
+                        "value": "kallithea"
                       },
                       {
                         "name": "OPENSHIFT_POSTGRESQL_DB_URL",
