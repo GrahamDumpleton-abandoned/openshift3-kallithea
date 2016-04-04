@@ -1,1 +1,15 @@
---application-type paste $WARPDRIVE_APP_ROOT/tmp/production.ini --trust-proxy-header X-Forwarded-For --trust-proxy-header X-Forwarded-Port --trust-proxy-header X-Forwarded-Scheme
+--document-root $WARPDRIVE_APP_ROOT/lib/python2.7/site-packages/kallithea/public
+
+--application-type paste
+--entry-point $WARPDRIVE_APP_ROOT/tmp/production.ini
+
+--limit-request-body 107374182400
+
+--request-timeout 3600
+--inactivity-timeout 600
+
+--trust-proxy-header X-Forwarded-For
+--trust-proxy-header X-Forwarded-Port
+--trust-proxy-header X-Forwarded-Scheme
+
+--pass-authorization
