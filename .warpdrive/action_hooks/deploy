@@ -4,8 +4,6 @@ set -x
 
 set -eo pipefail
 
-sed -i "s%^sqlalchemy\.db1\.url = .*$%sqlalchemy.db1.url = $OPENSHIFT_POSTGRESQL_DB_URL%" $WARPDRIVE_APP_ROOT/tmp/production.ini
-
 if [ "$KALLITHEA_DEPLOYMENT_TYPE" = "lite" ]; then
     warpdrive setup
     warpdrive migrate

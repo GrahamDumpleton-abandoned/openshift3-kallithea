@@ -6,18 +6,10 @@ set -eo pipefail
 
 # Runs the database migration.
 #
-# This script can be executed using the 'warpdrive migrate' command from
-# a 'mid' hook. The deployment should only ever use a 'Recreate'
+# This script should be executed using the 'warpdrive migrate' command
+# from a 'mid' hook. The deployment should only ever use a 'Recreate'
 # strategy and not a 'Rolling' strategy to ensure that database
 # migrations are done when no processes are trying to access the
 # database.
-
-# When run from a 'pre' hook we need to do this explicitly as is
-# normally only done during deploy action hook when running the
-# actual application.
-
-sed -i "s%^sqlalchemy\.db1\.url = .*$%sqlalchemy.db1.url = $OPENSHIFT_POSTGRESQL_DB_URL%" $WARPDRIVE_APP_ROOT/tmp/production.ini
-
-# Run the actual database migration.
 
 paster upgrade-db $WARPDRIVE_APP_ROOT/tmp/production.ini --force-yes

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -x
+
+set -eo pipefail
+
+# Adjust the Paste configuration file to update database details from
+# environment variables.
+
+sed -i "s%^sqlalchemy\.db1\.url = .*$%sqlalchemy.db1.url = $OPENSHIFT_POSTGRESQL_DB_URL%" $WARPDRIVE_APP_ROOT/tmp/production.ini
