@@ -123,7 +123,7 @@
                       },
                       {
                         "name": "OPENSHIFT_POSTGRESQL_DB_URL",
-                        "value": "postgresql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${APPLICATION_NAME}-db:5432/${APPLICATION_NAME}_db"
+                        "value": "postgresql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${APPLICATION_NAME}-db:5432/kallithea"
                       },
                       {
                         "name": "KALLITHEA_ADMIN_USERNAME",
@@ -182,7 +182,7 @@
                       },
                       {
                         "name": "OPENSHIFT_POSTGRESQL_DB_URL",
-                        "value": "postgresql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${APPLICATION_NAME}-db:5432/${APPLICATION_NAME}_db"
+                        "value": "postgresql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${APPLICATION_NAME}-db:5432/kallithea"
                       },
                       {
                         "name": "KALLITHEA_ADMIN_USERNAME",
@@ -274,7 +274,7 @@
                       },
                       {
                         "name": "OPENSHIFT_POSTGRESQL_DB_URL",
-                        "value": "postgresql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${APPLICATION_NAME}-db:5432/${APPLICATION_NAME}_db"
+                        "value": "postgresql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${APPLICATION_NAME}-db:5432/kallithea"
                       },
                       {
                         "name": "KALLITHEA_ADMIN_USERNAME",
@@ -478,7 +478,7 @@
                       },
                       {
                         "name": "POSTGRESQL_DATABASE",
-                        "value": "${APPLICATION_NAME}_db"
+                        "value": "kallithea"
                       }
                     ],
                     "resources": {
@@ -780,7 +780,7 @@
                       },
                       {
                         "name": "OPENSHIFT_POSTGRESQL_DB_URL",
-                        "value": "postgresql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@localhost:5432/${APPLICATION_NAME}_db"
+                        "value": "postgresql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@localhost:5432/kallithea"
                       },
                       {
                         "name": "KALLITHEA_ADMIN_USERNAME",
@@ -846,7 +846,7 @@
                       },
                       {
                         "name": "POSTGRESQL_DATABASE",
-                        "value": "${APPLICATION_NAME}_db"
+                        "value": "kallithea"
                       }
                     ],
                     "resources": {
