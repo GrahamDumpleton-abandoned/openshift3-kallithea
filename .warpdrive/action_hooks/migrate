@@ -4,6 +4,10 @@ set -x
 
 set -eo pipefail
 
+# Check whether the database is actually ready.
+
+python $WARPDRIVE_SRC_ROOT/.warpdrive/scripts/check-database.py
+
 # Runs the database migration.
 #
 # This script should be executed using the 'warpdrive migrate' command
