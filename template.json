@@ -326,7 +326,7 @@
             ],
             "resources": {
               "requests": {
-                "storage": "${APPLICATION_VOLUME_CAPACITY}"
+                "storage": "${SHARED_VOLUME_CAPACITY}"
               }
             }
           }
@@ -374,23 +374,6 @@
             "tls": {
               "termination": "edge",
               "insecureEdgeTerminationPolicy": "Allow"
-            }
-          }
-        },
-        {
-          "kind": "PersistentVolumeClaim",
-          "apiVersion": "v1",
-          "metadata": {
-            "name": "${APPLICATION_NAME}-db-pvc"
-          },
-          "spec": {
-            "accessModes": [
-              "ReadWriteOnce"
-            ],
-            "resources": {
-              "requests": {
-                "storage": "${DATABASE_VOLUME_CAPACITY}"
-              }
             }
           }
         },
@@ -498,7 +481,7 @@
                   {
                     "name": "${APPLICATION_NAME}-db-pv",
                     "persistentVolumeClaim": {
-                      "claimName": "${APPLICATION_NAME}-db-pvc"
+                      "claimName": "${APPLICATION_NAME}-pvc"
                     }
                   }
                 ]
@@ -570,13 +553,6 @@
           "value": "192Mi"
         },
         {
-          "name": "APPLICATION_VOLUME_CAPACITY",
-          "displayName": "Application volume capacity",
-          "description": "Volume space available for source code repositories",
-          "value": "512Mi",
-          "required": true
-        },
-        {
           "name": "DATABASE_USERNAME",
           "displayName": "PostgreSQL database user",
           "description": "Name of PostgreSQL database user",
@@ -599,10 +575,10 @@
           "value": "192Mi"
         },
         {
-          "name": "DATABASE_VOLUME_CAPACITY",
-          "displayName": "Database volume capacity",
-          "description": "Volume space available for PostgreSQL database",
-          "value": "256Mi",
+          "name": "SHARED_VOLUME_CAPACITY",
+          "displayName": "Shared volume capacity",
+          "description": "Volume space available for source code repositories and PostgreSQL database",
+          "value": "512Mi",
           "required": true
         }
       ],
