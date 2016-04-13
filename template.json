@@ -8,7 +8,7 @@
       "metadata": {
         "name": "kallithea-scm",
         "annotations": {
-          "description": "Kallithea SCM (Multiple pods, scalable web front end)",
+          "description": "Kallithea SCM",
           "iconClass": "icon-database",
           "tags": "instant-app,kallithea"
         }
@@ -326,7 +326,7 @@
             ],
             "resources": {
               "requests": {
-                "storage": "${SHARED_VOLUME_CAPACITY}"
+                "storage": "${APPLICATION_VOLUME_CAPACITY}"
               }
             }
           }
@@ -550,7 +550,15 @@
           "name": "APPLICATION_MEMORY_LIMIT",
           "displayName": "Application memory limit",
           "description": "Maximum amount of memory Kallithea can use",
-          "value": "192Mi"
+          "value": "192Mi",
+          "required": true
+        },
+        {
+          "name": "APPLICATION_VOLUME_CAPACITY",
+          "displayName": "Application volume capacity",
+          "description": "Volume space available for source code repositories and database",
+          "value": "512Mi",
+          "required": true
         },
         {
           "name": "DATABASE_USERNAME",
@@ -572,13 +580,7 @@
           "name": "DATABASE_MEMORY_LIMIT",
           "displayName": "PostgreSQL memory limit",
           "description": "Maximum amount of memory PostgreSQL can use",
-          "value": "192Mi"
-        },
-        {
-          "name": "SHARED_VOLUME_CAPACITY",
-          "displayName": "Shared volume capacity",
-          "description": "Volume space available for source code repositories and PostgreSQL database",
-          "value": "512Mi",
+          "value": "192Mi",
           "required": true
         }
       ],
@@ -592,7 +594,7 @@
       "metadata": {
         "name": "kallithea-scm-lite",
         "annotations": {
-          "description": "Kallithea SCM Lite (Single pod, cannot be scaled)",
+          "description": "Kallithea SCM Lite",
           "iconClass": "icon-database",
           "tags": "instant-app,kallithea"
         }
@@ -683,20 +685,6 @@
                 }
               },
               {
-                "type": "ImageChange",
-                "imageChangeParams": {
-                  "automatic": true,
-                  "containerNames": [
-                    "${APPLICATION_NAME}-db"
-                  ],
-                  "from": {
-                    "kind": "ImageStreamTag",
-                    "name": "postgresql:9.4",
-                    "namespace": "openshift"
-                  }
-                }
-              },
-              {
                 "type": "ConfigChange"
               }
             ],
@@ -732,31 +720,7 @@
                       },
                       {
                         "name": "OPENSHIFT_DATABASE_TYPE",
-                        "value": "PostgreSQL"
-                      },
-                      {
-                        "name": "OPENSHIFT_POSTGRESQL_DB_HOST",
-                        "value": "localhost"
-                      },
-                      {
-                        "name": "OPENSHIFT_POSTGRESQL_DB_PORT",
-                        "value": "5432"
-                      },
-                      {
-                        "name": "OPENSHIFT_POSTGRESQL_DB_USERNAME",
-                        "value": "${DATABASE_USERNAME}"
-                      },
-                      {
-                        "name": "OPENSHIFT_POSTGRESQL_DB_PASSWORD",
-                        "value": "${DATABASE_PASSWORD}"
-                      },
-                      {
-                        "name": "OPENSHIFT_POSTGRESQL_DB_NAME",
-                        "value": "kallithea"
-                      },
-                      {
-                        "name": "OPENSHIFT_POSTGRESQL_DB_URL",
-                        "value": "postgresql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@localhost:5432/kallithea"
+                        "value": "SQLite"
                       },
                       {
                         "name": "KALLITHEA_ADMIN_USERNAME",
@@ -780,60 +744,6 @@
                       {
                         "name": "${APPLICATION_NAME}-pv",
                         "mountPath": "/opt/app-root/data"
-                      }
-                    ]
-                  },
-                  {
-                    "name": "${APPLICATION_NAME}-db",
-                    "image": "openshift/postgresql",
-                    "ports": [
-                      {
-                        "containerPort": 5432,
-                        "protocol": "TCP"
-                      }
-                    ],
-                    "readinessProbe": {
-                      "timeoutSeconds": 1,
-                      "initialDelaySeconds": 5,
-                      "exec": {
-                        "command": [
-                          "/bin/sh",
-                          "-i",
-                          "-c",
-                          "psql -h 127.0.0.1 -U $POSTGRESQL_USER -q -d $POSTGRESQL_DATABASE -c 'SELECT 1'"
-                        ]
-                      }
-                    },
-                    "livenessProbe": {
-                      "timeoutSeconds": 1,
-                      "initialDelaySeconds": 30,
-                      "tcpSocket": {
-                        "port": 5432
-                      }
-                    },
-                    "env": [
-                      {
-                        "name": "POSTGRESQL_USER",
-                        "value": "${DATABASE_USERNAME}"
-                      },
-                      {
-                        "name": "POSTGRESQL_PASSWORD",
-                        "value": "${DATABASE_PASSWORD}"
-                      },
-                      {
-                        "name": "POSTGRESQL_DATABASE",
-                        "value": "kallithea"
-                      }
-                    ],
-                    "resources": {
-                      "limits": {
-                        "memory": "${DATABASE_MEMORY_LIMIT}"
-                      }
-                    },
-                    "volumeMounts": [
-                      {
-                        "name": "${APPLICATION_NAME}-pv",
-                        "mountPath": "/var/lib/pgsql/data"
                       }
                     ]
                   }
@@ -862,7 +772,7 @@
             ],
             "resources": {
               "requests": {
-                "storage": "${SHARED_VOLUME_CAPACITY}"
+                "storage": "${APPLICATION_VOLUME_CAPACITY}"
               }
             }
           }
@@ -951,34 +861,13 @@
           "name": "APPLICATION_MEMORY_LIMIT",
           "displayName": "Application memory limit",
           "description": "Maximum amount of memory Kallithea can use",
-          "value": "192Mi"
-        },
-        {
-          "name": "DATABASE_USERNAME",
-          "displayName": "PostgreSQL database user",
-          "description": "Name of PostgreSQL database user",
-          "generate": "expression",
-          "from": "user[A-Z0-9]{3}",
+          "value": "192Mi",
           "required": true
         },
         {
-          "name": "DATABASE_PASSWORD",
-          "displayName": "PostgreSQL user password",
-          "description": "Password for the PostgreSQL user",
-          "generate": "expression",
-          "from": "[a-zA-Z0-9]{16}",
-          "required": true
-        },
-        {
-          "name": "DATABASE_MEMORY_LIMIT",
-          "displayName": "PostgreSQL memory limit",
-          "description": "Maximum amount of memory PostgreSQL can use",
-          "value": "192Mi"
-        },
-        {
-          "name": "SHARED_VOLUME_CAPACITY",
-          "displayName": "Shared volume capacity",
-          "description": "Volume space available for source code repositories and PostgreSQL database",
+          "name": "APPLICATION_VOLUME_CAPACITY",
+          "displayName": "Application volume capacity",
+          "description": "Volume space available for source code repositories and database",
           "value": "512Mi",
           "required": true
         }
