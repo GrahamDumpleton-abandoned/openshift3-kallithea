@@ -26,7 +26,9 @@ if [ ! -f $WARPDRIVE_APP_ROOT/data/markers/setup ]; then
 
     # Check whether the database is actually ready.
 
-    python $WARPDRIVE_SRC_ROOT/.warpdrive/scripts/check-database.py
+    if [ "$OPENSHIFT_DATABASE_TYPE" = "PostgreSQL" ]; then
+        python $WARPDRIVE_SRC_ROOT/.warpdrive/scripts/check-postgresql.py
+    fi
 
     # Run the database initialisation.
 
