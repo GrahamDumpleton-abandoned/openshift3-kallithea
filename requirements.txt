@@ -29,6 +29,7 @@ pyparsing==1.5.7
 python-dateutil==1.5
 pytz==2016.3
 repoze.lru==0.6
+requests==2.9.1
 Routes==1.13
 simplejson==3.8.2
 six==1.10.0

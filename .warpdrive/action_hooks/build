@@ -4,6 +4,8 @@ set -x
 
 set -eo pipefail
 
+ln -s $WARPDRIVE_SRC_ROOT/rcextensions $WARPDRIVE_APP_ROOT/tmp/rcextensions
+
 APP_CONFIG=$WARPDRIVE_APP_ROOT/tmp/production.ini
 
 paster make-config Kallithea $APP_CONFIG
