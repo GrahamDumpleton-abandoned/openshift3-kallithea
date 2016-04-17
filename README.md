@@ -30,7 +30,9 @@ There is an intention to eventually provide a third deployment option called *Ul
 
 ## Installation Steps
 
-In a hurry? Want to get Kallithea running and don't care about the details? If you are, you can run the following steps using the OpenShift ``oc`` command line tool.
+In a hurry? Want to get Kallithea running and don't care about the details?
+
+If you are, you can run the following steps using the OpenShift ``oc`` command line tool.
 
 **Create a new project within your OpenShift cluster.**
 
@@ -116,7 +118,7 @@ svc/kallithea-db - 172.30.137.191:5432
   dc/kallithea-db deploys openshift/postgresql:9.4
     deployment #1 deployed 2 minutes ago - 1 pod
 
-1 warning identified, use 'oc status -v' to see details.
+View details with 'oc describe <resource>/<name>' or list everything with 'oc get all'.
 ```
 
 **Access the Kallithea instance (when the build and deployment has completed).**
