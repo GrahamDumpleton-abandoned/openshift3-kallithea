@@ -14,7 +14,7 @@ The reasons for developing this project are as follows:
 
 Because the project is in large part being used as a test bed to illustrate how to use warpdrive and OpenShift, in depth documentation is provided here on not only how to deploy Kallithea to OpenShift, but also how the scripts and templates provided are implemented and work.
 
-Although the primary target for deploying Kallithea is OpenShift, it is possible to also deploy to Docker. No pre built image is provided for this scenario, but instructions are provided for how you can create the required Docker image from this project repository using [Source to Image](https://github.com/openshift/source-to-image) (S2I).
+Although the primary target for deploying Kallithea is OpenShift, it is possible to also deploy to Docker. No pre built image is provided for this scenario, but instructions are provided for how you can create the required Docker image from this project repository using the [Source to Image](https://github.com/openshift/source-to-image) (S2I) tool.
 
 ## Deployment Options
 
