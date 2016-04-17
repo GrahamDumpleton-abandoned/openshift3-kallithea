@@ -6,6 +6,8 @@ This project repository contains all the files you need to deploy a Kallithea in
 
 An extension module is also installed for Kallithea which implements a web hook mechanism that can be linked up to OpenShift in order to automatically trigger a new build and deployment of your application within OpenShift whenever you push up changes to a Git repository managed by Kallithea.
 
+![image](./docs/kallithea-overview.jpg "Kallithea Overview")
+
 The reasons for developing this project are as follows:
 
 1. To provide an easy way of deploying Kallithea to an OpenShift cluster, enabling you to manage the source code repositories, rather than needing to use a source code hosting service such as GitHub, BitBucket or GitLab. 
