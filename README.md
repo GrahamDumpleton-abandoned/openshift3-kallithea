@@ -6,6 +6,8 @@ This project repository contains all the files you need to deploy a Kallithea in
 
 An extension module is also installed for Kallithea which implements a web hook mechanism that can be linked up to OpenShift in order to automatically trigger a new build and deployment of your application within OpenShift whenever you push up changes to a Git repository managed by Kallithea.
 
+![image](./docs/kallithea-dashboard.jpg "Kallithea Dashboard")
+
 ![image](./docs/kallithea-overview.jpg "Kallithea Overview")
 
 The reasons for developing this project are as follows:
@@ -28,11 +30,11 @@ Two different ways of deploying Kallithea are currently provided. These are:
 
 There is an intention to eventually provide a third deployment option called *Ultimate*. This will deploy two separate instances of Kallithea. The first instance will be used to serve up the web interface. The second will be used to handle all Git/Mercurial client interactions. This will allow the separate instances to be scaled up independently based on usage, and web server configurations to be tuned for the different use cases. The *Ultimate* option will also deploy Celery worker instances to handle long running tasks such as cloning of repositories on initial project creation. Rather than sharing a persistent volume between the PostgreSQL database and storage for Git/Mercurial repositories, the *Ultimate* option will use separate persistent volumes for each.
 
-## Installation Steps
+## Quick Installation
 
 In a hurry? Want to get Kallithea running and don't care about the details?
 
-If you are, you can run the following steps using the OpenShift ``oc`` command line tool.
+If you are, you can run the following steps using the OpenShift ``oc`` command line tool. For the more detailed explanations, see the links at the end of this document.
 
 **Create a new project within your OpenShift cluster.**
 
@@ -134,9 +136,25 @@ Application admin user=admin # generated
 Application admin user password=EukS3fKWcXJWxRw1 # generated
 ```
 
-## All the Gory Details
+## Detailed Installation
 
 Coming soon.
+
+Detailed instructions for deploying Kallithea are:
+
+* Deployment using the web console.
+* Deployment using the command line.
+* Deployment using a Docker service.
+* Setting up web hooks for OpenShift.
+
+## Technical Details
+
+Coming soon.
+
+Guides explaining how Docker and OpenShift is being used are:
+
+* Building of the application image.
+* Database initialisation and migration.
 
 
  
