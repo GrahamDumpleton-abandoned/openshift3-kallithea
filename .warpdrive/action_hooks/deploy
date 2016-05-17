@@ -4,7 +4,7 @@ set -x
 
 set -eo pipefail
 
-if [ "$OPENSHIFT_DATABASE_TYPE" = "SQLite" ]; then
+if [ "$KALLITHEA_DEPLOYMENT_TYPE" = "single-pod" ]; then
     warpdrive setup
     warpdrive migrate
 fi

@@ -26,7 +26,7 @@ if [ ! -f $WARPDRIVE_APP_ROOT/data/markers/setup ]; then
 
     # Check whether the database is actually ready.
 
-    if [ "$OPENSHIFT_DATABASE_TYPE" = "PostgreSQL" ]; then
+    if [ "$KALLITHEA_DATABASE_TYPE" = "postgresql" ]; then
         python $WARPDRIVE_SRC_ROOT/.warpdrive/scripts/check-postgresql.py
     fi
 

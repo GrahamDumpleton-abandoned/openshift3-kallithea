@@ -7,11 +7,11 @@ set -eo pipefail
 # Adjust the Paste configuration file to update database details from
 # environment variables.
 
-if [ "$OPENSHIFT_DATABASE_TYPE" = "PostgreSQL" ]; then
+if [ "$KALLITHEA_DATABASE_TYPE" = "postgresql" ]; then
     sed -i "s%^sqlalchemy\.db1\.url = .*$%sqlalchemy.db1.url = $OPENSHIFT_POSTGRESQL_DB_URL%" $WARPDRIVE_APP_ROOT/tmp/production.ini
 fi
 
-if [ "$OPENSHIFT_DATABASE_TYPE" = "SQLite" ]; then
+if [ "$KALLITHEA_DATABASE_TYPE" = "sqlite" ]; then
     OPENSHIFT_SQLITE_DB_URL="sqlite:///$WARPDRIVE_APP_ROOT/data/kallithea/database.db"
     sed -i "s%^sqlalchemy\.db1\.url = .*$%sqlalchemy.db1.url = $OPENSHIFT_SQLITE_DB_URL?timeout=60%" $WARPDRIVE_APP_ROOT/tmp/production.ini
 fi

@@ -6,9 +6,9 @@
             "kind": "Template",
             "apiVersion": "v1",
             "metadata": {
-                "name": "kallithea-scm",
+                "name": "kallithea-scm-multi-postgresql",
                 "annotations": {
-                    "description": "Kallithea SCM",
+                    "description": "Kallithea SCM (Multiple Pods / PostgreSQL)",
                     "iconClass": "icon-database",
                     "tags": "instant-app,kallithea"
                 }
@@ -94,12 +94,12 @@
                                         ],
                                         "env": [
                                             {
-                                                "name": "OPENSHIFT_LANGUAGE_RUNTIME",
-                                                "value": "Python"
+                                                "name": "KALLITHEA_DEPLOYMENT_TYPE",
+                                                "value": "multiple-pods"
                                             },
                                             {
-                                                "name": "OPENSHIFT_DATABASE_TYPE",
-                                                "value": "PostgreSQL"
+                                                "name": "KALLITHEA_DATABASE_TYPE",
+                                                "value": "postgresql"
                                             },
                                             {
                                                 "name": "OPENSHIFT_POSTGRESQL_DB_HOST",
@@ -153,12 +153,12 @@
                                         ],
                                         "env": [
                                             {
-                                                "name": "OPENSHIFT_LANGUAGE_RUNTIME",
-                                                "value": "Python"
+                                                "name": "KALLITHEA_DEPLOYMENT_TYPE",
+                                                "value": "multiple-pods"
                                             },
                                             {
-                                                "name": "OPENSHIFT_DATABASE_TYPE",
-                                                "value": "PostgreSQL"
+                                                "name": "KALLITHEA_DATABASE_TYPE",
+                                                "value": "postgresql"
                                             },
                                             {
                                                 "name": "OPENSHIFT_POSTGRESQL_DB_HOST",
@@ -245,12 +245,12 @@
                                         ],
                                         "env": [
                                             {
-                                                "name": "OPENSHIFT_LANGUAGE_RUNTIME",
-                                                "value": "Python"
+                                                "name": "KALLITHEA_DEPLOYMENT_TYPE",
+                                                "value": "multiple-pods"
                                             },
                                             {
-                                                "name": "OPENSHIFT_DATABASE_TYPE",
-                                                "value": "PostgreSQL"
+                                                "name": "KALLITHEA_DATABASE_TYPE",
+                                                "value": "postgresql"
                                             },
                                             {
                                                 "name": "OPENSHIFT_POSTGRESQL_DB_HOST",
@@ -592,16 +592,16 @@
                 }
             ],
             "labels": {
-                "template": "kallithea-scm-template"
+                "template": "kallithea-scm-multi-postgresql-template"
             }
         },
         {
             "kind": "Template",
             "apiVersion": "v1",
             "metadata": {
-                "name": "kallithea-scm-lite",
+                "name": "kallithea-scm-single-sqlite",
                 "annotations": {
-                    "description": "Kallithea SCM Lite",
+                    "description": "Kallithea SCM (Single Pod / SQLite)",
                     "iconClass": "icon-database",
                     "tags": "instant-app,kallithea"
                 }
@@ -719,15 +719,11 @@
                                         "env": [
                                             {
                                                 "name": "KALLITHEA_DEPLOYMENT_TYPE",
-                                                "value": "lite"
+                                                "value": "single-pod"
                                             },
                                             {
-                                                "name": "OPENSHIFT_LANGUAGE_RUNTIME",
-                                                "value": "Python"
-                                            },
-                                            {
-                                                "name": "OPENSHIFT_DATABASE_TYPE",
-                                                "value": "SQLite"
+                                                "name": "KALLITHEA_DATABASE_TYPE",
+                                                "value": "sqlite"
                                             },
                                             {
                                                 "name": "KALLITHEA_ADMIN_USERNAME",
@@ -782,7 +778,7 @@
                     },
                     "spec": {
                         "accessModes": [
-                            "ReadWriteMany"
+                            "ReadWriteOnce"
                         ],
                         "resources": {
                             "requests": {
@@ -887,7 +883,7 @@
                 }
             ],
             "labels": {
-                "template": "kallithea-scm-lite-template"
+                "template": "kallithea-scm-single-sqlite-template"
             }
         }
     ]
