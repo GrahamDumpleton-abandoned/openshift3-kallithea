@@ -557,7 +557,7 @@
                     "name": "APPLICATION_MEMORY_LIMIT",
                     "displayName": "Application memory limit",
                     "description": "Maximum amount of memory Kallithea can use",
-                    "value": "192Mi",
+                    "value": "384Mi",
                     "required": true
                 },
                 {
@@ -587,7 +587,7 @@
                     "name": "DATABASE_MEMORY_LIMIT",
                     "displayName": "PostgreSQL memory limit",
                     "description": "Maximum amount of memory PostgreSQL can use",
-                    "value": "192Mi",
+                    "value": "384Mi",
                     "required": true
                 }
             ],
@@ -875,7 +875,7 @@
                     "name": "APPLICATION_MEMORY_LIMIT",
                     "displayName": "Application memory limit",
                     "description": "Maximum amount of memory Kallithea can use",
-                    "value": "192Mi",
+                    "value": "384Mi",
                     "required": true
                 },
                 {
