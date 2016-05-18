@@ -336,6 +336,23 @@
                     }
                 },
                 {
+                    "kind": "PersistentVolumeClaim",
+                    "apiVersion": "v1",
+                    "metadata": {
+                        "name": "${APPLICATION_NAME}-db-pvc"
+                    },
+                    "spec": {
+                        "accessModes": [
+                            "ReadWriteOnce"
+                        ],
+                        "resources": {
+                            "requests": {
+                                "storage": "${DATABASE_VOLUME_CAPACITY}"
+                            }
+                        }
+                    }
+                },
+                {
                     "kind": "Service",
                     "apiVersion": "v1",
                     "metadata": {
@@ -485,7 +502,7 @@
                                     {
                                         "name": "${APPLICATION_NAME}-db-pv",
                                         "persistentVolumeClaim": {
-                                            "claimName": "${APPLICATION_NAME}-pvc"
+                                            "claimName": "${APPLICATION_NAME}-db-pvc"
                                         }
                                     }
                                 ]
@@ -585,6 +602,13 @@
                     "displayName": "PostgreSQL memory limit",
                     "description": "Maximum amount of memory PostgreSQL can use",
                     "value": "384Mi",
+                    "required": true
+                },
+                {
+                    "name": "DATABASE_VOLUME_CAPACITY",
+                    "displayName": "Database volume capacity",
+                    "description": "Volume space available for database",
+                    "value": "512Mi",
                     "required": true
                 }
             ],
