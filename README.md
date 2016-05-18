@@ -16,25 +16,25 @@ The reasons for developing this project are as follows:
 2. As a case study for how the building and deployment of a Python web application can be managed using [warpdrive](http://www.getwarped.org).
 3. As a case study for how a complex web application, requiring persistent storage, a database, and other services, can be deployed to OpenShift.
 
-Because the project is in large part being used as a test bed to illustrate how to use warpdrive and OpenShift, in depth documentation is provided here on not only how to deploy Kallithea to OpenShift, but also how the scripts and templates provided are implemented and work.
-
-Although the primary target for deploying Kallithea is OpenShift, it is possible to also deploy to Docker. No pre built image is provided for this scenario, but instructions are provided for how you can create the required Docker image from this project repository using the [Source to Image](https://github.com/openshift/source-to-image) (S2I) tool.
+Although the primary target for deploying Kallithea is OpenShift, it is possible to also deploy to Docker. No pre built image is provided for this scenario, but if interested, instructions can be provided for how you can create the required Docker image from this project repository using the [Source to Image](https://github.com/openshift/source-to-image) (S2I) tool.
 
 ## Deployment Options
 
-Two different ways of deploying Kallithea are currently provided. These are:
+Three different ways of deploying Kallithea are currently provided.
 
-**Default** - This option deploys a single instance of Kallithea along with an instance of the PostgreSQL database. The PostgreSQL database and the Git/Mercurial repositories are stored on a shared persistent volume. OpenShift life cycle hooks are used to automatically initialise the database on the first deployment, as well as manage database migrations on subsequent deployments when required. The Kallithea web application can be scaled up if necessary.
+![image](./docs/kallithea-add-to-project.jpg "Kallithea Setup")
 
-**Lite** - This option deploys a single instance of Kallithea, but rather than using PostgreSQL, uses a file based SQLite database stored within the persistent volume used to store the Git/Mercurial repositories. Initialisation of the database and subsequent database migrations are handled through action hooks executed within the Kallithea instance when it is being started. Although Kallithea can with this option still be scaled up, it is recommended the *Default* option be used if scaling is required, as PostgreSQL is likely to provide a more robust system than using SQLite.
+These are:
 
-There is an intention to eventually provide a third deployment option called *Ultimate*. This will deploy two separate instances of Kallithea. The first instance will be used to serve up the web interface. The second will be used to handle all Git/Mercurial client interactions. This will allow the separate instances to be scaled up independently based on usage, and web server configurations to be tuned for the different use cases. The *Ultimate* option will also deploy Celery worker instances to handle long running tasks such as cloning of repositories on initial project creation. Rather than sharing a persistent volume between the PostgreSQL database and storage for Git/Mercurial repositories, the *Ultimate* option will use separate persistent volumes for each.
+**kallithea-scm-single-sqlite** - This option deploys a single instance of Kallithea, using a file based SQLite database stored within the persistent volume used to store the Git/Mercurial repositories. Initialisation of the database and subsequent database migrations are handled through action hooks executed within the Kallithea instance when it is being started. This option does not support scaling up to multiple instances.
+
+**kallithea-scm-single-postgresql** - This option deploys a single instance of Kallithea along with an instance of the PostgreSQL database, as separate containers in the same pod. The PostgreSQL database and the Git/Mercurial repositories are stored on a shared persistent volume. Initialisation of the database and subsequent database migrations are handled through action hooks executed within the Kallithea instance when it is being started. This option does not support scaling up to multiple instances.
+
+**kallithea-scm-multi-postgresql** - This option deploys a single instance of Kallithea along with an instance of the PostgreSQL database, as separate containers running in distinct pods. The PostgreSQL database and the Git/Mercurial repositories are stored on a shared persistent volume. OpenShift life cycle hooks are used to automatically initialise the database on the first deployment, as well as manage database migrations on subsequent deployments when required. The Kallithea web application can be scaled up provided that the OpenShift cluster being used supports ``ReadWriteMany`` persistent volumes. This volume type is needed to allow multiple instances to be run on different nodes, with the persistent volume mounted on all instances.
 
 ## Quick Installation
 
-In a hurry? Want to get Kallithea running and don't care about the details?
-
-If you are, you can run the following steps using the OpenShift ``oc`` command line tool. For the more detailed explanations, see the links at the end of this document.
+To install, you can run the following steps using the OpenShift ``oc`` command line tool.
 
 **Create a new project within your OpenShift cluster.**
 
@@ -53,25 +53,26 @@ to build a new hello-world application in Ruby.
 
 ```
 $ oc create -f https://raw.githubusercontent.com/GrahamDumpleton/openshift3-kallithea/master/template.json
-template "kallithea-scm" created
-template "kallithea-scm-lite" created
+template "kallithea-scm-multi-postgresql" created
+template "kallithea-scm-single-postgresql" created
+template "kallithea-scm-single-sqlite" created
 ```
 
 **Create the Kallithea application.**
 
 ```
 $ oc new-app kallithea-scm
---> Deploying template kallithea-scm for "kallithea-scm"
+--> Deploying template kallithea-scm-single-postgresql for "kallithea-scm-single-postgresql"
      With parameters:
       Application instance name=kallithea
       Application admin user=admin # generated
-      Application admin user password=EukS3fKWcXJWxRw1 # generated
+      Application admin user password=kqTdYGwaQRUqukcB # generated
       Application admin email=admin@example.com # generated
-      Application memory limit=192Mi
+      Application memory limit=384Mi
       Application volume capacity=512Mi
-      PostgreSQL database user=user0XV # generated
-      PostgreSQL user password=Vjxhbn5nPmwXcBGP # generated
-      PostgreSQL memory limit=192Mi
+      PostgreSQL database user=userE3T # generated
+      PostgreSQL user password=1AHjOO7Pn4svCRJJ # generated
+      PostgreSQL memory limit=384Mi
 --> Creating resources with label app=kallithea ...
     imagestream "kallithea" created
     buildconfig "kallithea" created
@@ -79,8 +80,6 @@ $ oc new-app kallithea-scm
     persistentvolumeclaim "kallithea-pvc" created
     service "kallithea" created
     route "kallithea" created
-    deploymentconfig "kallithea-db" created
-    service "kallithea-db" created
 --> Success
     Build scheduled, use 'oc logs -f bc/kallithea' to track its progress.
     Run 'oc status' to view your app.
@@ -92,7 +91,7 @@ $ oc new-app kallithea-scm
 $ oc describe route kallithea
 Name:			kallithea
 Created:		60 seconds ago
-Labels:			app=kallithea,template=kallithea-scm-template,web=kallithea
+Labels:			app=kallithea,template=kallithea-scm-single-postgresql-template,web=kallithea
 Annotations:		openshift.io/generated-by=OpenShiftNewApp
 			openshift.io/host.generated=true
 Requested Host:		kallithea-scm.apps.10.2.2.2.xip.io
@@ -112,13 +111,11 @@ $ oc status
 In project scm on server https://10.2.2.2:8443
 
 https://kallithea-scm.apps.10.2.2.2.xip.io (and http) to pod port 8080-tcp (svc/kallithea)
-  dc/kallithea deploys istag/kallithea:latest <-
-    bc/kallithea builds https://github.com/GrahamDumpleton/openshift3-kallithea.git#master with openshift/python:2.7
-    deployment #1 deployed 30 seconds ago - 1 pod
-
-svc/kallithea-db - 172.30.137.191:5432
-  dc/kallithea-db deploys openshift/postgresql:9.4
-    deployment #1 deployed 2 minutes ago - 1 pod
+  dc/kallithea deploys
+    istag/kallithea:latest <- bc/kallithea builds https://github.com/GrahamDumpleton/openshift3-kallithea.git#master with openshift/python:2.7
+    deployment #1 running for 60 seconds - 1 pod
+    openshift/postgresql:9.4
+    deployment #1 running for 60 seconds - 1 pod
 
 View details with 'oc describe <resource>/<name>' or list everything with 'oc get all'.
 ```
@@ -132,29 +129,10 @@ open https://kallithea-scm.apps.10.2.2.2.xip.io
 **Login using the 'admin' user account (use the generated password output by 'oc new-app').**
 
 ```
-Application admin user=admin # generated
-Application admin user password=EukS3fKWcXJWxRw1 # generated
+      Application admin user=admin # generated
+      Application admin user password=kqTdYGwaQRUqukcB # generated
 ```
 
-## Detailed Installation
-
-Coming soon.
-
-Detailed instructions for deploying Kallithea are:
-
-* Deployment using the web console.
-* Deployment using the command line.
-* Deployment using a Docker service.
-* Setting up web hooks for OpenShift.
-
-## Technical Details
-
-Coming soon.
-
-Guides explaining how Docker and OpenShift is being used are:
-
-* Building of the application image.
-* Database initialisation and migration.
 
 
  
