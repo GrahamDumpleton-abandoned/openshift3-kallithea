@@ -34,7 +34,7 @@ These are:
 
 ## Quick Installation
 
-To install, you can run the following steps using the OpenShift ``oc`` command line tool.
+To install, you can run the following steps using the OpenShift ``oc`` command line tool. After having run the step to load the templates, rather than use ``oc``, you could also add the application from the OpenShift web console.
 
 **Create a new project within your OpenShift cluster.**
 
