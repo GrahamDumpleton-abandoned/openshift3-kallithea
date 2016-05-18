@@ -8,7 +8,7 @@ An extension module is also installed for Kallithea which implements a web hook 
 
 ![image](./docs/kallithea-dashboard.jpg "Kallithea Dashboard")
 
-![image](./docs/kallithea-overview.jpg "Kallithea Overview")
+![image](./docs/kallithea-overview.jpg "OpenShift Overview")
 
 The reasons for developing this project are as follows:
 
@@ -22,7 +22,7 @@ Although the primary target for deploying Kallithea is OpenShift, it is possible
 
 Three different ways of deploying Kallithea are currently provided.
 
-![image](./docs/kallithea-add-to-project.jpg "Kallithea Setup")
+![image](./docs/kallithea-add-to-project.jpg "Add to Project")
 
 These are:
 
@@ -32,7 +32,7 @@ These are:
 
 **kallithea-scm-multi-postgresql** - This option deploys a single instance of Kallithea along with an instance of the PostgreSQL database, as separate containers running in distinct pods. The PostgreSQL database and the Git/Mercurial repositories are stored on a shared persistent volume. OpenShift life cycle hooks are used to automatically initialise the database on the first deployment, as well as manage database migrations on subsequent deployments when required. The Kallithea web application can be scaled up provided that the OpenShift cluster being used supports ``ReadWriteMany`` persistent volumes. This volume type is needed to allow multiple instances to be run on different nodes, with the persistent volume mounted on all instances.
 
-## Quick Installation
+## Installation Steps
 
 To install, you can run the following steps using the OpenShift ``oc`` command line tool. After having run the step to load the templates, rather than use ``oc``, you could also add the application from the OpenShift web console.
 
@@ -133,11 +133,20 @@ open https://kallithea-scm.apps.10.2.2.2.xip.io
       Application admin user password=kqTdYGwaQRUqukcB # generated
 ```
 
-
-
+## Generic WebHook URL
  
+Kallithea doesn't support the concept of webhooks out of the box, however an extension has been provided to add this functionality. A few manual steps are required to set this up in the Kallithea web interface.
 
+The first step is to enable globally for the Kallithea instance, the 'repository extra fields' feature. To do this, as an administrator, select from the menus ``Admin->Settings->Visual``. Enable and save the settings.
 
+![image](./docs/kallithea-enable-extra-fields.jpg "Enable Extra Fields")
 
+In each repository you want to use webhooks, you now need to create an extra field with key ``webhook``. To do this, select from the menus for the repository ``Options->Settings->Extra Fields``. Fill out details of the extra field as shown, and add the field.
 
+![image](./docs/kallithea-define-webhook-field.jpg "Define WebHook Field")
 
+Finally, select from the menus for the repository ``Options->Settings`` and add the OpenShift generic web hook URL into the new field that was added and save the settings.
+
+![image](./docs/kallithea-add-webhook-url.jpg "Add WebHook URL")
+
+Whenever changes are now pushed up to the code repository, an automatic rebuild should be triggered in OpenShift.
