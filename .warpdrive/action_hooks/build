@@ -17,13 +17,13 @@ sed -i.bak "s/^pdebug = .*$/pdebug = false/" $APP_CONFIG
 
 # [COMMON] #
 
-sed -i.bak "s%^cache_dir = .*$%cache_dir = /opt/app-root/data/kallithea%" $APP_CONFIG
-sed -i.bak "s%^index_dir = .*$%index_dir = /opt/app-root/data/kallithea/index%" $APP_CONFIG
-sed -i.bak "s%^archive_cache_dir = .*$%archive_cache_dir = /opt/app-root/data/kallithea/tarballcache%" $APP_CONFIG
+sed -i.bak "s%^cache_dir = .*$%cache_dir = $WARPDRIVE_APP_ROOT/data/kallithea%" $APP_CONFIG
+sed -i.bak "s%^index_dir = .*$%index_dir = $WARPDRIVE_APP_ROOT/data/kallithea/index%" $APP_CONFIG
+sed -i.bak "s%^archive_cache_dir = .*$%archive_cache_dir = $WARPDRIVE_APP_ROOT/data/kallithea/tarballcache%" $APP_CONFIG
 
 sed -i.bak "s/^instance_id = .*$/instance_id = */" $APP_CONFIG
 
 sed -i.bak "s/^use_celery = .*$/use_celery = false/" $APP_CONFIG
 
-sed -i.bak "s%^beaker.cache.data_dir = .*$%beaker.cache.data_dir = /opt/app-root/data/kallithea/cache/data%" $APP_CONFIG
-sed -i.bak "s%^beaker.cache.lock_dir = .*$%beaker.cache.lock_dir = /opt/app-root/data/kallithea/cache/lock%" $APP_CONFIG
+sed -i.bak "s%^beaker.cache.data_dir = .*$%beaker.cache.data_dir = $WARPDRIVE_APP_ROOT/data/kallithea/cache/data%" $APP_CONFIG
+sed -i.bak "s%^beaker.cache.lock_dir = .*$%beaker.cache.lock_dir = $WARPDRIVE_APP_ROOT/data/kallithea/cache/lock%" $APP_CONFIG
